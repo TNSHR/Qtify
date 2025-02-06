@@ -1,28 +1,20 @@
 import React from "react";
-import { Card, CardMedia, CardContent, Typography } from "@mui/material";
 import Chip from "@mui/material/Chip";
-import "./Cards.css";
+import "./Cards.css"; // Ensure this file exists
 
-const AlbumCard = ({ image, albumName, follows }) => {
+const Card = ({ image, follows, title }) => {
   return (
-    <Card className="album-card">
-      {/* Album Image */}
-      <CardMedia
-        
+    <div className="card">
+      <img 
+        src={image} 
+        alt={title} 
+        className="card-image"
+        onError={(e) => e.target.src = "https://via.placeholder.com/150"} // Fallback Image
       />
-
-      {/* Bottom Section */}
-      <CardContent sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-        {/* Album Name */}
-        <Typography variant="h6" noWrap>
-          {albumName}
-        </Typography>
-
-        {/* Follows Count as a Chip */}
-        <Chip label={`${follows} Follows`} size="small" color="primary" />
-      </CardContent>
-    </Card>
+      <Chip label={`${follows} Follows`} className="card-chip" />
+      <div className="card-title">{title}</div>
+    </div>
   );
 };
 
-export default AlbumCard;
+export default Card;
