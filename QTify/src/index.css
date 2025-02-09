@@ -1,68 +1,48 @@
+/* The :root selector in CSS is a pseudo-class that represents the highest-level parent element, which is usually the <html> element. 
+It is commonly used to define global CSS variables (custom properties) that can be reused throughout the stylesheet. */
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --color-primary: #34c94b;
+  --color-white: #ffffff;
+  --color-black: #121212;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+/*   The * selector is a universal selector that targets all elements on the page. Pseudo-elements in CSS are used to style parts of an element or create additional content. They are denoted by the :: syntax
+Adding *::before and *::after extends the selection to include their respective pseudo-elements. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
-a:hover {
-  color: #535bf2;
+/* refer INTV-1 NOTES */
+
+* {
+  margin: 0;
 }
+
+html,body {
+  height: 100%;
+}
+
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  background-color: var(--color-black);   /*now use above 3 theme colours as a variable in whole project's css*/
+  color: var(--color-white);
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.5;
+  overflow-x: hidden;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+img,svg{
+  display: block;
+  /* align-items: center; */
+  max-width: 100%;
+  /* margin: 5px; */
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+/* 
+overwrite the default css of the swiper-slide provided by swiper
+by default -> width: 100%;
+ */
+.swiper-slide{
+  width: auto !important;
 }

@@ -1,37 +1,64 @@
 import React, { useState } from "react";
+import { CircularProgress } from "@mui/material";
 import Card from "../Cards/Cards";
-import "./Section.css";
+import styles from "./Section.module.css";
+import Carousel from "../Carousle/Carousel";
 
-const Section = ({ title, data }) => {
-  const [isExpanded, setIsExpanded] = useState(false); // Toggle state
+const Section = ({ type, title, data, toggle = true }) => {
+  const [carouselToggle, setCarouselToggle] = useState(true);
 
-  if (!Array.isArray(data) || data.length === 0) {
-    return <div>No data available</div>;
-  }
-
-  // Show only 4 items when collapsed, all when expanded
-  const visibleCards = isExpanded ? data : data.slice(0, 4);
+  const handleToggle = () => {
+    setCarouselToggle((prev) => !prev);
+  };
 
   return (
-    <div className="section">
-      <div className="section-header">
-        <h2>{title}</h2>
-        <button className="toggle-btn" onClick={() => setIsExpanded(!isExpanded)}>
-          {isExpanded ? "Collapse" : "Show All"}
-        </button>
+    <div>
+      {/* Section header with title and toggle button */}
+      <div className={styles.sectionTop}>
+        <h3>{title}</h3>
+
+        {/* Conditionally render the toggle button */}
+        {toggle && (
+          <h4
+            onClick={handleToggle}
+            className={styles.toggleText}
+            role="button" // Add role for accessibility
+            tabIndex={0} // Make it focusable
+            aria-label={carouselToggle ? "Show all items" : "Collapse to carousel"} // Accessibility label
+          >
+            {carouselToggle ? "Show All" : "Collapse All"}
+          </h4>
+        )}
       </div>
-      <div className="scroll-container">
-        <div className="grid">
-          {visibleCards.map((item) => (
-            <Card
-              key={item.id}
-              image={item.image || "https://via.placeholder.com/150"} // Fallback image
-              follows={item.follows}
-              title={item.title}
-            />
-          ))}
+
+      {/* Check if data exists and is an array before rendering */}
+      {Array.isArray(data) && data.length > 0 ? (
+        <div className={styles.sectionInnerWrapper}>
+          {/* Show all cards in a grid layout when carouselToggle is false */}
+          {!carouselToggle ? (
+            <div className={styles.showAllWrapper}>
+              {data.map((album, index) => (
+                <Card data={album} type={type} key={album.id || index} />
+              ))}
+            </div>
+          ) : (
+            <div>
+              {/* Show carousel when carouselToggle is true */}
+              <Carousel
+                data={data}
+                renderCardComponent={(data) => (
+                  <Card data={data} type={type} />
+                )}
+              />
+            </div>
+          )}
         </div>
-      </div>
+      ) : (
+        <div className={styles.progressBar}>
+          {/* Show a loading spinner when there is no data */}
+          <CircularProgress />
+        </div>
+      )}
     </div>
   );
 };

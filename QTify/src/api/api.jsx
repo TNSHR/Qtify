@@ -1,14 +1,32 @@
-import axios from "axios";
+import axios from 'axios';
 
-const API_BASE_URL = "https://qtify-backend-labs.crio.do";
+export const BACKEND_URL = "https://qtify-backend-labs.crio.do";
 
 export const fetchTopAlbums = async () => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/albums/top`);
-    console.log("API Response:", response.data);
-    return response.data; // Ensure the API response has correct structure
+    const res = await axios.get(`${BACKEND_URL}/albums/top`);
+    return res.data;
   } catch (error) {
-    console.error("Error fetching top albums:", error);
-    return []; 
+    return null;
+  }
+};
+
+export const fetchNewAlbums = async () => {
+  try {
+    const res = await axios.get(`${BACKEND_URL}/albums/new`);
+    return res.data; // ✅ Fix: returning the data
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+export const fetchSongs = async () => {
+  try {
+    const res = await axios.get(`${BACKEND_URL}/songs`);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    return null;
   }
 };
