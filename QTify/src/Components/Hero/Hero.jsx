@@ -8,7 +8,7 @@ const Hero = ()=>{
     <>
     <section className={styles.Hero}>
       <div className = {styles.HeroTitle}>
-        <h1>100 Thousand Song, ad-free</h1>
+        <h1>100 Thousand Songs, ad-free</h1>
         <h2>Over thousands podcast episodes</h2>
 
       </div>
