@@ -7,7 +7,7 @@ function Card({data,type}){
     case "album":{
       const {image,follows,title,songs}= data;
       return(
-        <Tooltip title ={`${songs?.length} songs`} placement="top" arrow>
+        <Tooltip title ={`${Array.isArray(songs) ? songs.length : 0} songs`} placement="top" arrow>
            <div className={styles.wrapper}>
             <div className={styles.card}>
               <img src ={image} alt="album"/>
