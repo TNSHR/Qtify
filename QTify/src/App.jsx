@@ -36,8 +36,10 @@ function App() {
     try {
       const res = await fetchSongs();
       setSongsData(res);
+      setFilteredData(res);
     } catch (error) {
       console.log(error);
+      return null;
     }
   };
 
@@ -47,18 +49,19 @@ function App() {
     else if (index === 2) key = "pop";
     else if (index === 3) key = "jazz";
     else if (index === 4) key = "blues";
-
+  
     if (index === 0) {
-      setFilteredData(songsData);
+      setFilteredData(songsData); // Use existing data instead of re-fetching
       return;
     }
-
-    const newSongsArray = songsData.filter((song) => song.genre && song.genre.key === key);
-    console.log("generateNewSongs triggered and filtered this Data:", newSongsArray);
+  
+    const newSongsArray = songsData.filter(
+      (song) => song.genre?.key === key // Optional chaining to prevent errors
+    );
     setFilteredData(newSongsArray);
   };
 
-  const handleChangeIndex = (newValue) => {
+  const handleChangeIndex = async (newValue) => {
     console.log("handleChangeIndex triggered with newValue:", newValue);
     setValue(newValue);
     generateNewSongs(newValue);
@@ -66,8 +69,8 @@ function App() {
 
   useEffect(() => {
     generateTopAlbumSongs();
-    generateNewAlbumSongs();
-    generateSongs();
+  generateNewAlbumSongs();
+  generateSongs();
   }, []);
 
   useEffect(() => {
